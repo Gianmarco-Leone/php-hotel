@@ -72,11 +72,15 @@
         <form method="GET" action="" class="py-5">
             <label for="park" class="fw-bold">Parking</label>
             <select class="form-select" name="park" id="park">
-                <option value="all">All</option>
                 <option value="yes">Yes</option>
                 <option value="no">No</option>
             </select>
-            <button class="btn btn-success my-3">Cerca</button>
+            <button class="btn btn-primary my-3">Cerca</button>
+            <button type="button" class="btn btn-info my-3">
+                <a href="./index.php" class="text-decoration-none text-white">
+                    Rimuovi filtri
+                </a>
+            </button>
         </form>
 
         <!-- RESULT TABLE -->
@@ -88,6 +92,7 @@
                         <?php endforeach ?>
                     </tr>
                 </thead>
+                <!-- Se selezionato input parcheggio "yes" -->
                 <tbody>
                     <?php foreach($hotels as $hotel_list) : ?>
                         <?php if($select_park === "yes" && ($hotel_list["parking"]) === true ) : ?>
@@ -99,6 +104,8 @@
                         <?php endif ?>
                     <?php endforeach ?>
                 </tbody>
+
+                <!-- Se selezionato input parcheggio "no" -->
                 <tbody>
                     <?php foreach($hotels as $hotel_list) : ?>
                         <?php if($select_park === "no" && ($hotel_list["parking"]) === false ) : ?>
@@ -110,9 +117,11 @@
                         <?php endif ?>
                     <?php endforeach ?>
                 </tbody>
+
+                <!-- Se non viene selezionato niente -->
                 <tbody>
                     <?php foreach($hotels as $hotel_list) : ?>
-                        <?php if(empty($select_park) || $select_park === "all") : ?>
+                        <?php if(empty($select_park)) : ?>
                             <tr>
                                 <?php foreach($hotel_list as $hotel_feature) : ?>
                                     <td> <?= $hotel_feature ?> </td>
