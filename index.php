@@ -40,10 +40,6 @@
 
     ];
 
-    foreach ($hotels as $hotel) {
-        var_dump($hotel);
-    }
-
 ?>
 
 <!DOCTYPE html>
@@ -55,6 +51,15 @@
     <title>PHP Hotel</title>
 </head>
 <body>
-    
+    <ul>
+        <?php foreach($hotels as $hotel_features) : ?>
+            <?php foreach($hotel_features as $hotel) : ?>
+                <li>
+                    <?= $hotel ?>
+                </li>
+            <?php endforeach ?>
+        <?php endforeach ?>
+    </ul>
 </body>
 </html>
+
