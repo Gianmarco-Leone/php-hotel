@@ -45,6 +45,13 @@
     };
 
     $hotel_data = array_keys($hotel_list);
+
+    // Bonus 1:
+    if (isset($_GET["park"])) {
+        $select_park = $_GET["park"];
+    } else {
+        $select_park = "";
+    };
 ?>
 
 <!DOCTYPE html>
@@ -61,27 +68,66 @@
 </head>
 <body>
     <div class="container pt-5">
-        <table class="table">
-            <thead>
-                <tr>
-                    <?php foreach($hotel_data as $single_data) : ?>
-                        <th scope="col"> <?= ucfirst($single_data) ?> </th>
-                    <?php endforeach ?>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach($hotels as $hotel_list) : ?>
+        <!-- FORM -->
+        <form method="GET" action="" class="py-5">
+            <label for="park" class="fw-bold">Parking</label>
+            <select class="form-select" name="park" id="park">
+                <option value="all">All</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+            <button class="btn btn-success my-3">Cerca</button>
+        </form>
+
+        <!-- RESULT TABLE -->
+            <table class="table">
+                <thead>
                     <tr>
-                        <?php foreach($hotel_list as $hotel) : ?>
-                            <td> <?= $hotel ?> </td>
+                        <?php foreach($hotel_data as $single_data) : ?>
+                            <th scope="col"> <?= ucfirst($single_data) ?> </th>
                         <?php endforeach ?>
                     </tr>
-                <?php endforeach ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <?php foreach($hotels as $hotel_list) : ?>
+                        <?php if($select_park === "yes" && ($hotel_list["parking"]) === true ) : ?>
+                            <tr>
+                                <?php foreach($hotel_list as $hotel_feature) : ?>
+                                    <td> <?= $hotel_feature ?> </td>
+                                <?php endforeach ?>
+                            </tr>
+                        <?php endif ?>
+                    <?php endforeach ?>
+                </tbody>
+                <tbody>
+                    <?php foreach($hotels as $hotel_list) : ?>
+                        <?php if($select_park === "no" && ($hotel_list["parking"]) === false ) : ?>
+                            <tr>
+                                <?php foreach($hotel_list as $hotel_feature) : ?>
+                                    <td> <?= $hotel_feature ?> </td>
+                                <?php endforeach ?>
+                            </tr>
+                        <?php endif ?>
+                    <?php endforeach ?>
+                </tbody>
+                <tbody>
+                    <?php foreach($hotels as $hotel_list) : ?>
+                        <?php if(empty($select_park) || $select_park === "all") : ?>
+                            <tr>
+                                <?php foreach($hotel_list as $hotel_feature) : ?>
+                                    <td> <?= $hotel_feature ?> </td>
+                                <?php endforeach ?>
+                            </tr>
+                        <?php endif ?>
+                    <?php endforeach ?>
+                </tbody>
+            </table>
     </div>
 </body>
 </html>
+
+
+<!-- if(!empty($select_park) && $select_park === "yes") -->
 
 
 
