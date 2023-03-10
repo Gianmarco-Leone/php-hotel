@@ -72,6 +72,7 @@
         <form method="GET" action="" class="py-5">
             <label for="park" class="fw-bold">Parking</label>
             <select class="form-select" name="park" id="park">
+                <option></option>
                 <option value="yes">Yes</option>
                 <option value="no">No</option>
             </select>
