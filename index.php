@@ -40,6 +40,11 @@
 
     ];
 
+    // Creo Array con le varie caratteristiche per stamparle nella table
+    foreach ($hotels as $hotel_list) {
+    };
+
+    $hotel_data = array_keys($hotel_list);
 ?>
 
 <!DOCTYPE html>
@@ -55,21 +60,19 @@
 
 </head>
 <body>
-    <div class="container">
+    <div class="container pt-5">
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Parking</th>
-                    <th scope="col">Vote</th>
-                    <th scope="col">Distance to center</th>
+                    <?php foreach($hotel_data as $single_data) : ?>
+                        <th scope="col"> <?= ucfirst($single_data) ?> </th>
+                    <?php endforeach ?>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach($hotels as $hotel_features) : ?>
+                <?php foreach($hotels as $hotel_list) : ?>
                     <tr>
-                        <?php foreach($hotel_features as $hotel) : ?>
+                        <?php foreach($hotel_list as $hotel) : ?>
                             <td> <?= $hotel ?> </td>
                         <?php endforeach ?>
                     </tr>
