@@ -40,22 +40,35 @@
 
     ];
 
-    // Creo Array con le varie caratteristiche per stamparle nella table
-    foreach ($hotels as $hotel_list) {
-    };
+    $filter_parking = $_GET["filter_parking"] ?? "both";
+    $filter_vote = $_GET["input_vote"] ?? "";
+    $filtered_hotels = $hotels;
 
-    $hotel_data = array_keys($hotel_list);
+    if($filter_parking !== "both") {
+        $temp_hotels = [];
+        foreach ($filtered_hotels as $hotel) {
+            if ($filter_parking == $hotel["parking"]) {
+                $temp_hotels[] = $hotel;
+            }
+        }
+        $filtered_hotels = $temp_hotels;
+    }
 
-    // Bonus 1:
-    if (isset($_GET["park"])) {
-        $select_park = $_GET["park"];
-    } else {
-        $select_park = "";
-    };
+    if(!empty($filter_vote)) {
+        $temp_hotels = [];
+        foreach ($filtered_hotels as $hotel) {
+            if ($hotel["vote"] >= $filter_vote) {
+                $temp_hotels[] = $hotel;
+            }
+        }
+        $filtered_hotels = $temp_hotels;
+    }
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -63,81 +76,97 @@
     <title>PHP Hotel</title>
 
     <!-- BOOTSTRAP -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
 </head>
+
 <body>
-    <div class="container pt-5">
-        <!-- FORM -->
-        <form method="GET" action="" class="py-5">
-            <label for="park" class="fw-bold">Parking</label>
-            <select class="form-select" name="park" id="park">
-                <option></option>
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-            </select>
-            <button class="btn btn-primary my-3">Cerca</button>
-            <button type="button" class="btn btn-info my-3">
-                <a href="./index.php" class="text-decoration-none text-white">
-                    Rimuovi filtri
-                </a>
-            </button>
-        </form>
+    <div class="container">
+        <h1 class="my-5">Hotels</h1>
+        <section class="row my-5">
+
+
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        Filter
+                    </div>
+                    <div class="card-body">
+                        <!-- FORM -->
+                        <form method="GET" class="row">
+                            <div class="col-9 mb-3">
+                                <label for="input_vote" class="form-label">Vote</label>
+                                <input type="number" class="form-control" id="input_vote" name="input_vote" min="0"
+                                    max="5" value="<?= $filter_vote ?>">
+                            </div>
+
+                            <div class="col-3 mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" value="1" name="filter_parking"
+                                        id="filter_parking-1">
+                                    <label class="form-check-label" for="filter_parking-1">
+                                        With parking
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" value="0" name="filter_parking"
+                                        id="filter_parking-0">
+                                    <label class="form-check-label" for="filter_parking-0">
+                                        Without parking
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" value="both" name="filter_parking"
+                                        id="filter_parking-2">
+                                    <label class="form-check-label" for="filter_parking-2">
+                                        Both
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <button class="btn btn-primary my-3">Cerca</button>
+                                <button type="button" class="btn btn-info my-3">
+                                    <a href="./index.php" class="text-decoration-none text-white">
+                                        Rimuovi filtri
+                                    </a>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </section>
 
         <!-- RESULT TABLE -->
-            <table class="table">
-                <thead>
-                    <tr>
-                        <?php foreach($hotel_data as $single_data) : ?>
-                            <th scope="col"> <?= ucfirst($single_data) ?> </th>
-                        <?php endforeach ?>
-                    </tr>
-                </thead>
-                <!-- Se selezionato input parcheggio "yes" -->
-                <tbody>
-                    <?php foreach($hotels as $hotel_list) : ?>
-                        <?php if($select_park === "yes" && ($hotel_list["parking"]) === true ) : ?>
-                            <tr>
-                                <?php foreach($hotel_list as $hotel_feature) : ?>
-                                    <td> <?= $hotel_feature ?> </td>
-                                <?php endforeach ?>
-                            </tr>
-                        <?php endif ?>
-                    <?php endforeach ?>
-                </tbody>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Parking</th>
+                    <th scope="col">Vote</th>
+                    <th scope="col">Distance to center</th>
+                </tr>
+            </thead>
 
-                <!-- Se selezionato input parcheggio "no" -->
-                <tbody>
-                    <?php foreach($hotels as $hotel_list) : ?>
-                        <?php if($select_park === "no" && ($hotel_list["parking"]) === false ) : ?>
-                            <tr>
-                                <?php foreach($hotel_list as $hotel_feature) : ?>
-                                    <td> <?= $hotel_feature ?> </td>
-                                <?php endforeach ?>
-                            </tr>
-                        <?php endif ?>
-                    <?php endforeach ?>
-                </tbody>
-
-                <!-- Se non viene selezionato niente -->
-                <tbody>
-                    <?php foreach($hotels as $hotel_list) : ?>
-                        <?php if(empty($select_park)) : ?>
-                            <tr>
-                                <?php foreach($hotel_list as $hotel_feature) : ?>
-                                    <td> <?= $hotel_feature ?> </td>
-                                <?php endforeach ?>
-                            </tr>
-                        <?php endif ?>
-                    <?php endforeach ?>
-                </tbody>
-            </table>
+            <tbody>
+                <?php foreach($filtered_hotels as $hotel) : ?>
+                <tr>
+                    <td><?= $hotel["name"] ?></td>
+                    <td><?= $hotel["description"] ?></td>
+                    <td><?= $hotel["parking"] == 1 ? "Yes" : "No" ?></td>
+                    <td><?= $hotel["vote"] ?></td>
+                    <td><?= $hotel["distance_to_center"] ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
     </div>
 </body>
+
 </html>
-
-
-<!-- if(!empty($select_park) && $select_park === "yes") -->
-
-
-
