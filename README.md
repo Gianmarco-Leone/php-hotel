@@ -15,12 +15,15 @@
 
 - Aggiungere Bootstrap e mostrare le informazioni con una tabella.
 
-## Bonus:
+## Bonus 1:
 
-1. Aggiungere un form ad inizio pagina che tramite una richiesta GET permetta di filtrare gli hotel che hanno un parcheggio.
-   ![Screenshot](./img/Screenshot_bonus_1.png);
-2. Aggiungere un secondo campo al form che permetta di filtrare gli hotel per voto (es. inserisco 3 ed ottengo tutti gli hotel che hanno un voto di tre stelle o superiore)
-   NOTA: deve essere possibile utilizzare entrambi i filtri contemporaneamente (es. ottenere una lista con hotel che dispongono di parcheggio e che hanno un voto di tre stelle o superiore)
-   ![Screenshot](./img/Screenshot_bonus_2.png);
+Aggiungere un form ad inizio pagina che tramite una richiesta GET permetta di filtrare gli hotel che hanno un parcheggio.
+![Screenshot](./img/Screenshot_bonus_1.png)
+
+## Bonus 2:
+
+Aggiungere un secondo campo al form che permetta di filtrare gli hotel per voto (es. inserisco 3 ed ottengo tutti gli hotel che hanno un voto di tre stelle o superiore)
+NOTA: deve essere possibile utilizzare entrambi i filtri contemporaneamente (es. ottenere una lista con hotel che dispongono di parcheggio e che hanno un voto di tre stelle o superiore)
+![Screenshot](./img/Screenshot_bonus_2.png)
 
 _Se non viene specificato nessun filtro, visualizzare come in precedenza tutti gli hotel._
